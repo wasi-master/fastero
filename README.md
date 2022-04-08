@@ -1,0 +1,2 @@
+# hypertime
+ Python timeit alternative
