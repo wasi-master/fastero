@@ -45,4 +45,34 @@ Using stdin as an input
 
 In fastero, ``"-"`` Is not used for stdin, you should use ``"file: stdin"`` instead
 
+100-400ns overhead
+""""""""""""""""""
 
+First I'll show you this example
+
+.. code-block:: pycon
+
+   Python 3.11.0a6 (main, Mar  7 2022, 16:46:19) [MSC v.1929 64 bit (AMD64)] on win32
+   Type "help", "copyright", "credits" or "license" for more information.
+   >>> import timeit
+   >>> timeit.timeit(number=1) * 1_000_000
+   0.39999940781854093
+   >>> timeit.timeit(number=1_000_000)
+   0.010034400002041366
+
+Although both of them are supposed to have the same value (in an ideal situation).
+The first one is almost 40 times lower.
+
+This also applies to ``number=2`` but the difference is almost cut in half (20 times slower).
+
+.. code-block:: pycon
+
+   >>> timeit.timeit(number=2) * 1_000_000
+   0.39999940781854093
+   >>> timeit.timeit(number=2_000_000)
+   0.019674099999974715
+
+Due to this reason. Using very low run count will result in a 100-400 nanosecond overhead.
+This will not matter most of the time. Because, if you are dealing with code so fast that
+this is gonna matter, the run count will probably be very high so it won't matter anymore.
+But I would still like to mention it here in case someone's wondering
