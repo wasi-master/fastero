@@ -3,6 +3,6 @@
 __name__ = "fastero"
 __title__ = __name__
 __license__ = "MIT"
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "Arian Mollik Wasi"
 __github__ = "https://github.com/wasi-master/fastero"
