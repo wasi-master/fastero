@@ -1,0 +1,828 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="Python timeit CLI for the 21st century." name="description" />
+<meta content="Arian Mollik Wasi" name="author" />
+<meta content="Arian Mollik Wasi" name="copyright" />
+<meta content="Python, Timeit, Fastero, Wasi Master, Arian Mollik Wasi" name="keywords" />
+<meta content="English" name="language" />
+<meta content="Fastero Documentation - CLI Reference" name="og:title" />
+<meta content="Fastero" name="og:site_name" />
+<meta content="website" name="og:type" />
+<meta content="https://fastero.readthedocs.io" name="og:url" />
+<meta content="https://i.ibb.co/ysbFf3b/python-http-library-benchmark.png" name="og:image" />
+<meta content="Python timeit CLI for the 21st century. Fastero is a beautiful and flexible timeit (cli) alternative that you have to check out" name="og:description" />
+<meta content="summary_large_image" name="twitter:card" />
+<meta content="Fastero Documentation - CLI Reference" name="twitter:title" />
+<meta content="https://i.ibb.co/ysbFf3b/python-http-library-benchmark.png" name="twitter:image" />
+<meta content="Python timeit CLI for the 21st century. Fastero is a beautiful and flexible timeit (cli) alternative that you have to check out" name="twitter:description" />
+    <link rel="icon" href="../_static/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../_static/avicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="../_static/avicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="apple-touch-icon" href="../_static/apple-touch-icon.png" sizes="180x180" type="image/png">
+    <link rel="manifest" href="../_static/site.webmanifest">
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="CLI Reference (Automated)" href="cli_reference_automated.html" /><link rel="prev" title="Quickstart" href="quickstart.html" />
+
+    <meta name="generator" content="sphinx-4.4.0, furo 2022.04.07"/>
+        <title>CLI Reference - Fastero Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swa" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --font-stack: Quicksand, Raleway, Montserrat, Futura, Poppins, Josefin Sans, Caviar Dreams, League Spartan, Sofia Pro, Segoe UI, Roboto, Ubuntu, Cantarell, Lato, Noto Sans, Arial, Helvetica sans-serif;
+  --font-stack--monospace: Fira Code, MonoLisa, Source Code Pro, Ubuntu Mono, JetBrains Mono, Hack, Monaco, Menlo, Consolas, Courier, monospace;
+  --color-api-name: #9580ff;
+  --color-api-pre-name: #8975eb;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Fastero Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.png" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Fastero Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">CLI Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cli_reference_automated.html">CLI Reference (Automated)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporting.html">Exporting Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips_recipies_and_notes.html">Tips, Recipies, and Notes</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Development</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/internal_structure.html">Internal Stucture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/workflows.html">Workflows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/license.html">License</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="cli-reference">
+<h1>CLI Reference<a class="headerlink" href="#cli-reference" title="Permalink to this headline">#</a></h1>
+<p>This is a hand-written version of the CLI Reference.
+It may be outdated, if it is please kindly remind me
+to update it in a github issue or open a pull request.
+In the case of it being out of date (not having some option or argument),
+You may want to check out the <a class="reference internal" href="cli_reference_automated.html"><span class="doc">Automated CLI Reference</span></a>.</p>
+<p>This does not cover exporting, those are covered in their own page <a class="reference internal" href="exporting.html#exporting-reference"><span class="std std-ref">Exporting Reference</span></a> and
+the parameters are covered in <a class="reference internal" href="cli_reference_automated.html#cli-reference-automated"><span class="std std-ref">CLI Reference (Automated)</span></a></p>
+<p>Also, this version is very long and filled with examples. :)</p>
+<section id="fastero">
+<h2>fastero<a class="headerlink" href="#fastero" title="Permalink to this headline">#</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="o">[</span>CODE_SNIPPETS...<span class="o">]</span> <span class="o">[</span>OPTIONS<span class="o">]</span>
+</pre></div>
+</div>
+<section id="arguments">
+<h3>Arguments<a class="headerlink" href="#arguments" title="Permalink to this headline">#</a></h3>
+<p>These are the positional arguments, opposed to options, these don’t
+require any prefix and are directly passed</p>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-CODE_SNIPPETS">
+<span id="cmdoption-arg-code-snippets"></span><span class="sig-name descname"><span class="pre">CODE_SNIPPETS</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-CODE_SNIPPETS" title="Permalink to this definition">#</a></dt>
+<dd><p>The snippets to benchmark. There may be multiple</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"str(1)"</span> <span class="s2">"f'{1}'"</span>
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/str_vs_fstring.png"><img alt="Output image" src="../_images/str_vs_fstring.png" style="width: 1161px;"/></a>
+</details></div>
+<p>Any of these can be <code class="docutils literal notranslate"><span class="pre">-</span></code>, to get the input later. Useful for multi-line inputs</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero - -
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/code_input_with_prompt.gif"><img alt="Output image" src="../_images/code_input_with_prompt.gif" style="width: 1233px;"/></a>
+</details></div>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">file:</span></code> to read output from a file. If your code starts with <code class="docutils literal notranslate"><span class="pre">file:</span></code>,
+you can escape this behavior by adding 2 spaces after the <code class="docutils literal notranslate"><span class="pre">:</span></code>, e.g. <code class="docutils literal notranslate"><span class="pre">file:</span>  <span class="pre">foo</span></code></p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"file: foo.py"</span> <span class="s2">"file: bar.py"</span>
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/code_input_with_file.png"><img alt="Output image" src="../_images/code_input_with_file.png" style="width: 1233px;"/></a>
+</details></div>
+<p>The filename for <code class="docutils literal notranslate"><span class="pre">file:</span></code> can also be <code class="docutils literal notranslate"><span class="pre">stdin</span></code> to accept output piped from another program</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span> <span class="s2">"str(1)"</span> <span class="p">|</span> fastero <span class="s2">"file: stdin"</span>
+</pre></div>
+</div>
+</div>
+<p>All of these can also be used together.</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"str(1)"</span> <span class="s2">"file: bar.py"</span> -
+</pre></div>
+</div>
+<p>This would mean the first argument is <code class="docutils literal notranslate"><span class="pre">str(1)</span></code>,
+the second argument is the contents of bar.py,
+the third argument is the one given later</p>
+</div>
+</dd></dl>
+</section>
+<section id="options">
+<h3>Options<a class="headerlink" href="#options" title="Permalink to this headline">#</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-v">
+<span id="cmdoption-version"></span><span class="sig-name descname"><span class="pre">-v</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--version</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-v" title="Permalink to this definition">#</a></dt>
+<dd><p>Output the version of fastero that is currently being used</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-h">
+<span id="cmdoption-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-h" title="Permalink to this definition">#</a></dt>
+<dd><p>Show the help message</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-n">
+<span id="cmdoption-snippet-name"></span><span class="sig-name descname"><span class="pre">-n</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--snippet-name</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;NAME&gt;</span></span><a class="headerlink" href="#cmdoption-n" title="Permalink to this definition">#</a></dt>
+<dd><p>Assign a name to a snippet.</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"f'{1}'"</span> -n <span class="s2">"f-string"</span>
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/assigning_a_name_to_a_snippet.png"><img alt="Output image" src="../_images/assigning_a_name_to_a_snippet.png" style="width: 1233px;"/></a>
+</details></div>
+<p>This argument can be used multiple times</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"f'{1}'"</span> <span class="s2">"'{}'.format(1)"</span> -n <span class="s2">"f-string"</span> -n <span class="s2">"str.format()"</span>
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/assigning_names_to_multiple_snippets.png"><img alt="Output image" src="../_images/assigning_names_to_multiple_snippets.png" style="width: 1233px;"/></a>
+</details></div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-s">
+<span id="cmdoption-setup"></span><span class="sig-name descname"><span class="pre">-s</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--setup</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;STMT&gt;</span></span><a class="headerlink" href="#cmdoption-s" title="Permalink to this definition">#</a></dt>
+<dd><p>Provide some code to use as the initial setup for the benchmark snippets.
+This can be used to initialize classes, set variables, import libraries etc.</p>
+<div class="default admonition">
+<p class="admonition-title"><strong>Default</strong></p>
+<p>The default value for setup is <code class="docutils literal notranslate"><span class="pre">pass</span></code>. This is done to be consistent with
+<a class="reference external" href="https://docs.python.org/3/library/timeit.html#timeit.timeit">timeit</a></p>
+</div>
+<p>The format is the exact same as the <code class="docutils literal notranslate"><span class="pre">CODE_SNIPPETS</span></code> argument. Meaning it
+supports the <code class="docutils literal notranslate"><span class="pre">file:</span></code> directive to get from an file or stdin and the <code class="docutils literal notranslate"><span class="pre">"-"</span></code>
+parameter to enter multiline input in a prompt</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero --setup <span class="s2">"l = [0]"</span> <span class="s2">"a, = l"</span> <span class="s2">"a = l[0]"</span>
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/setup.png"><img alt="Output image" src="../_images/setup.png" style="width: 1233px;"/></a>
+</details></div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-f">
+<span id="cmdoption-from-json"></span><span class="sig-name descname"><span class="pre">-f</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--from-json</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;FILE&gt;</span></span><a class="headerlink" href="#cmdoption-f" title="Permalink to this definition">#</a></dt>
+<dd><p>Get input from a json file.</p>
+<div class="info admonition">
+<p class="admonition-title">Format</p>
+<p>If you only want to get parameters, the format should be this:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">"setup"</span><span class="p">:</span><span class="w"> </span><span class="s2">"l = [0]"</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">"snippet_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unpacking"</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">"snippet_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a, = l"</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">         </span><span class="nt">"snippet_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"indexing"</span><span class="p">,</span><span class="w"></span>
+<span class="w">         </span><span class="nt">"snippet_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a = l[0]"</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The keys <code class="docutils literal notranslate"><span class="pre">snippet_name</span></code> and <code class="docutils literal notranslate"><span class="pre">setup</span></code> are optional!</p>
+<p>If you however, want to get other information like the <a class="reference internal" href="../glossary.html#term-Mean"><span class="xref std std-term">mean</span></a> and <a class="reference internal" href="../glossary.html#term-Standard-deviation"><span class="xref std std-term">standard deviation</span></a>,
+you have to use a json file specifically generated by fastero, or one that uses the same format as fastero,</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="docutils literal notranslate"><span class="pre">--export-json</span></code>, <a class="reference external" href="#cmdoption-j">--json</a></p>
+</div>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<p>Assuming the contents of foo.json are as above:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero --from-json foo.json
+</pre></div>
+</div>
+<p>Then the output will be the one showed at the end of the <code class="docutils literal notranslate"><span class="pre">--setup</span></code> section</p>
+</div>
+<p>You can do a whole bunch of stuff by using this flag. For example if you want to
+re-preview the results from a json file, you can run</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero --from-json foo.json --only-export
+</pre></div>
+</div>
+<p>Yes I know, this option name is bit unintuitive, since this doesn’t have any export parameters,
+but when I named this option, I thought about what if people want to only export the data
+from the json file, I am open to renaming suggestions though</p>
+<p>If you want to export the results in one of the export formats, then you can add those export options
+alongside the <code class="docutils literal notranslate"><span class="pre">--from-json</span></code> and <code class="docutils literal notranslate"><span class="pre">--only-export</span></code>, e.g.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero --from-json foo.json --only-export --export-image
+</pre></div>
+</div>
+<p>So now, it will get the run results from the <code class="docutils literal notranslate"><span class="pre">foo.json</span></code> file and then export a png file with those results</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-j">
+<span id="cmdoption-json"></span><span class="sig-name descname"><span class="pre">-j</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--json</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-j" title="Permalink to this definition">#</a></dt>
+<dd><p>Only print json results. This is simillar to the <code class="docutils literal notranslate"><span class="pre">--export-json</span></code> option but instead of exporting to a file,
+this outputs the json results to standard output. This is given only for scripting purposes. A better reasoning
+is given in <a class="reference external" href="https://clig.dev/#:~:text=Display%20output%20as%20formatted%20JSON%20if%20%2D%2Djson%20is%20passed.">Command Line Interface Guidelines</a></p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"f'{1}'"</span> <span class="s2">"'{}'.format(1)"</span> -n <span class="s2">"f-string"</span> -n <span class="s2">"str.format()"</span> --json
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
+<span class="w">   </span><span class="nt">"setup"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w"></span>
+<span class="w">   </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"snippet_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f'{1}'"</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"snippet_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f-string"</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"runs"</span><span class="p">:</span><span class="w"> </span><span class="mi">55000000</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"mean"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.442414363636363e-08</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"median"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.392934e-08</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"min"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.3144839999999946e-08</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"max"</span><span class="p">:</span><span class="w"> </span><span class="mf">6.013294000000001e-08</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"stddev"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.926783849689808e-09</span><span class="w"></span>
+<span class="w">      </span><span class="p">},</span><span class="w"></span>
+<span class="w">      </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"snippet_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"'{}'.format(1)"</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"snippet_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"str.format()"</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"runs"</span><span class="p">:</span><span class="w"> </span><span class="mi">18000000</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"mean"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.652621666666668e-07</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"median"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.649461000000003e-07</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"min"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.6389370000000002e-07</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"max"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.6862390000000005e-07</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nt">"stddev"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.424589255715445e-09</span><span class="w"></span>
+<span class="w">      </span><span class="p">}</span><span class="w"></span>
+<span class="w">   </span><span class="p">]</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</details></div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-q">
+<span id="cmdoption-quiet"></span><span class="sig-name descname"><span class="pre">-q</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--quiet</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-q" title="Permalink to this definition">#</a></dt>
+<dd><p>If used, there will be no output printed.</p>
+<p>This is useful if you are running it from a script and don’t want the output polluting your terminal</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-e">
+<span id="cmdoption-only-export"></span><span class="sig-name descname"><span class="pre">-e</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--only-export</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-e" title="Permalink to this definition">#</a></dt>
+<dd><p>If used alongside –from-json, skips the benchmarking part and just exports the data.
+The json file needs to to contain the exported data or else this won’t work.</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-w">
+<span id="cmdoption-warmup"></span><span class="sig-name descname"><span class="pre">-w</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--warmup</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;NUM&gt;</span></span><a class="headerlink" href="#cmdoption-w" title="Permalink to this definition">#</a></dt>
+<dd><p>Perform NUM warmup runs before the actual benchmark. Perform this only for presistent improvements.
+Otherwise all performance gains are lost on each batch</p>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"f'{1}'"</span> <span class="s2">"'{}'.format(1)"</span> -n <span class="s2">"f-string"</span> -n <span class="s2">"str.format()"</span> --warmup 100_000
+
+Tip: The _ is used <span class="k">in</span> replacement of a comma, you can omit it.
+</pre></div>
+</div>
+</div>
+<p>This is due to how fastero benchmarking works. It relies on timeit and timeit doesn’t have a warmup
+parameter, so I’m thinking about subclassing <a class="reference external" href="https://docs.python.org/3/library/timeit.html#timeit.Timer" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">timeit.Timer</span></code></a> and implementing a warmup parameter myself.</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-c">
+<span id="cmdoption-code-theme"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--code-theme</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;THEME_NAME&gt;</span></span><a class="headerlink" href="#cmdoption-c" title="Permalink to this definition">#</a></dt>
+<dd><p>Theme for code input and output, also applicable if “-” is used for any of the parameters,</p>
+<div class="default admonition">
+<p class="admonition-title"><strong>Default</strong></p>
+<p>The default theme is <strong>one-dark</strong></p>
+</div>
+<p>For a list of the themes see <a class="reference external" href="https://pygments.org/styles">https://pygments.org/styles</a></p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<details>
+<summary>
+Best Themes</summary><p>These are the best themes: (in my opinion of course)</p>
+<div>
+<h4 id="one-dark">one-dark</h4>
+<div class="highlight" style="background: #282C34"><pre style="line-height: 125%;"><span></span><span style="color: #C678DD">from</span> <span style="color: #E06C75">typing</span> <span style="color: #C678DD">import</span> <span style="color: #E06C75">Iterator</span>
+
+<span style="color: #7F848E"># This is an example</span>
+<span style="color: #C678DD">class</span> <span style="color: #E5C07B">Math</span><span style="color: #ABB2BF">:</span>
+   <span style="color: #61AFEF">@staticmethod</span>
+   <span style="color: #C678DD">def</span> <span style="color: #61AFEF; font-weight: bold">fib</span><span style="color: #ABB2BF">(</span><span style="color: #E06C75">n</span><span style="color: #ABB2BF">:</span> <span style="color: #E5C07B">int</span><span style="color: #ABB2BF">)</span> <span style="color: #56B6C2">-&gt;</span> <span style="color: #E06C75">Iterator</span><span style="color: #ABB2BF">[</span><span style="color: #E5C07B">int</span><span style="color: #ABB2BF">]:</span>
+      <span style="color: #98C379">""" Fibonacci series up to n """</span>
+      <span style="color: #E06C75">a</span><span style="color: #ABB2BF">,</span> <span style="color: #E06C75">b</span> <span style="color: #56B6C2">=</span> <span style="color: #D19A66">0</span><span style="color: #ABB2BF">,</span> <span style="color: #D19A66">1</span>
+      <span style="color: #C678DD">while</span> <span style="color: #E06C75">a</span> <span style="color: #56B6C2">&lt;</span> <span style="color: #E06C75">n</span><span style="color: #ABB2BF">:</span>
+            <span style="color: #C678DD">yield</span> <span style="color: #E06C75">a</span>
+            <span style="color: #E06C75">a</span><span style="color: #ABB2BF">,</span> <span style="color: #E06C75">b</span> <span style="color: #56B6C2">=</span> <span style="color: #E06C75">b</span><span style="color: #ABB2BF">,</span> <span style="color: #E06C75">a</span> <span style="color: #56B6C2">+</span> <span style="color: #E06C75">b</span>
+
+<span style="color: #E06C75">result</span> <span style="color: #56B6C2">=</span> <span style="color: #E5C07B">sum</span><span style="color: #ABB2BF">(</span><span style="color: #E06C75">Math</span><span style="color: #56B6C2">.</span><span style="color: #E06C75">fib</span><span style="color: #ABB2BF">(</span><span style="color: #D19A66">42</span><span style="color: #ABB2BF">))</span>
+<span style="color: #E5C07B">print</span><span style="color: #ABB2BF">(</span><span style="color: #98C379">"The answer is {}"</span><span style="color: #56B6C2">.</span><span style="color: #E06C75">format</span><span style="color: #ABB2BF">(</span><span style="color: #E06C75">result</span><span style="color: #ABB2BF">))</span>
+</pre></div>
+</div><div>
+<h4 id="material">material</h4>
+<div class="highlight" style="background: #263238"><pre style="line-height: 125%;"><span></span><span style="color: #89DDFF; font-style: italic">from</span> <span style="color: #FFCB6B">typing</span> <span style="color: #89DDFF; font-style: italic">import</span> <span style="color: #EEFFFF">Iterator</span>
+
+<span style="color: #546E7A; font-style: italic"># This is an example</span>
+<span style="color: #BB80B3">class</span> <span style="color: #FFCB6B">Math</span><span style="color: #89DDFF">:</span>
+   <span style="color: #82AAFF">@staticmethod</span>
+   <span style="color: #BB80B3">def</span> <span style="color: #82AAFF">fib</span><span style="color: #89DDFF">(</span><span style="color: #EEFFFF">n</span><span style="color: #89DDFF">:</span> <span style="color: #82AAFF">int</span><span style="color: #89DDFF">)</span> <span style="color: #89DDFF">-&gt;</span> <span style="color: #EEFFFF">Iterator</span><span style="color: #89DDFF">[</span><span style="color: #82AAFF">int</span><span style="color: #89DDFF">]:</span>
+      <span style="color: #546E7A; font-style: italic">""" Fibonacci series up to n """</span>
+      <span style="color: #EEFFFF">a</span><span style="color: #89DDFF">,</span> <span style="color: #EEFFFF">b</span> <span style="color: #89DDFF">=</span> <span style="color: #F78C6C">0</span><span style="color: #89DDFF">,</span> <span style="color: #F78C6C">1</span>
+      <span style="color: #BB80B3">while</span> <span style="color: #EEFFFF">a</span> <span style="color: #89DDFF">&lt;</span> <span style="color: #EEFFFF">n</span><span style="color: #89DDFF">:</span>
+            <span style="color: #BB80B3">yield</span> <span style="color: #EEFFFF">a</span>
+            <span style="color: #EEFFFF">a</span><span style="color: #89DDFF">,</span> <span style="color: #EEFFFF">b</span> <span style="color: #89DDFF">=</span> <span style="color: #EEFFFF">b</span><span style="color: #89DDFF">,</span> <span style="color: #EEFFFF">a</span> <span style="color: #89DDFF">+</span> <span style="color: #EEFFFF">b</span>
+
+<span style="color: #EEFFFF">result</span> <span style="color: #89DDFF">=</span> <span style="color: #82AAFF">sum</span><span style="color: #89DDFF">(</span><span style="color: #EEFFFF">Math</span><span style="color: #89DDFF">.</span><span style="color: #EEFFFF">fib</span><span style="color: #89DDFF">(</span><span style="color: #F78C6C">42</span><span style="color: #89DDFF">))</span>
+<span style="color: #82AAFF">print</span><span style="color: #89DDFF">(</span><span style="color: #C3E88D">"The answer is </span><span style="color: #89DDFF">{}</span><span style="color: #C3E88D">"</span><span style="color: #89DDFF">.</span><span style="color: #EEFFFF">format</span><span style="color: #89DDFF">(</span><span style="color: #EEFFFF">result</span><span style="color: #89DDFF">))</span>
+</pre></div>
+</div><div>
+<h4 id="dracula">dracula</h4>
+<div class="highlight" style="background: #282a36"><pre style="line-height: 125%;"><span></span><span style="color: #ff79c6">from</span> <span style="color: #f8f8f2">typing</span> <span style="color: #ff79c6">import</span> <span style="color: #f8f8f2">Iterator</span>
+
+<span style="color: #6272a4"># This is an example</span>
+<span style="color: #ff79c6">class</span> <span style="color: #50fa7b">Math</span><span style="color: #f8f8f2">:</span>
+   <span style="color: #f8f8f2">@staticmethod</span>
+   <span style="color: #ff79c6">def</span> <span style="color: #50fa7b">fib</span><span style="color: #f8f8f2">(n:</span> <span style="color: #8be9fd; font-style: italic">int</span><span style="color: #f8f8f2">)</span> <span style="color: #ff79c6">-&gt;</span> <span style="color: #f8f8f2">Iterator[</span><span style="color: #8be9fd; font-style: italic">int</span><span style="color: #f8f8f2">]:</span>
+      <span style="color: #bd93f9">""" Fibonacci series up to n """</span>
+      <span style="color: #f8f8f2">a,</span> <span style="color: #f8f8f2">b</span> <span style="color: #ff79c6">=</span> <span style="color: #ffb86c">0</span><span style="color: #f8f8f2">,</span> <span style="color: #ffb86c">1</span>
+      <span style="color: #ff79c6">while</span> <span style="color: #f8f8f2">a</span> <span style="color: #ff79c6">&lt;</span> <span style="color: #f8f8f2">n:</span>
+            <span style="color: #ff79c6">yield</span> <span style="color: #f8f8f2">a</span>
+            <span style="color: #f8f8f2">a,</span> <span style="color: #f8f8f2">b</span> <span style="color: #ff79c6">=</span> <span style="color: #f8f8f2">b,</span> <span style="color: #f8f8f2">a</span> <span style="color: #ff79c6">+</span> <span style="color: #f8f8f2">b</span>
+
+<span style="color: #f8f8f2">result</span> <span style="color: #ff79c6">=</span> <span style="color: #8be9fd; font-style: italic">sum</span><span style="color: #f8f8f2">(Math</span><span style="color: #ff79c6">.</span><span style="color: #f8f8f2">fib(</span><span style="color: #ffb86c">42</span><span style="color: #f8f8f2">))</span>
+<span style="color: #8be9fd; font-style: italic">print</span><span style="color: #f8f8f2">(</span><span style="color: #bd93f9">"The answer is {}"</span><span style="color: #ff79c6">.</span><span style="color: #f8f8f2">format(result))</span>
+</pre></div>
+</div><div>
+<h3 id="monokai">monokai</h3>
+<div class="highlight" style="background: #272822"><pre style="line-height: 125%;"><span></span><span style="color: #f92672">from</span> <span style="color: #f8f8f2">typing</span> <span style="color: #f92672">import</span> <span style="color: #f8f8f2">Iterator</span>
+
+<span style="color: #75715e"># This is an example</span>
+<span style="color: #66d9ef">class</span> <span style="color: #a6e22e">Math</span><span style="color: #f8f8f2">:</span>
+   <span style="color: #a6e22e">@staticmethod</span>
+   <span style="color: #66d9ef">def</span> <span style="color: #a6e22e">fib</span><span style="color: #f8f8f2">(n:</span> <span style="color: #f8f8f2">int)</span> <span style="color: #f92672">-&gt;</span> <span style="color: #f8f8f2">Iterator[int]:</span>
+      <span style="color: #e6db74">""" Fibonacci series up to n """</span>
+      <span style="color: #f8f8f2">a,</span> <span style="color: #f8f8f2">b</span> <span style="color: #f92672">=</span> <span style="color: #ae81ff">0</span><span style="color: #f8f8f2">,</span> <span style="color: #ae81ff">1</span>
+      <span style="color: #66d9ef">while</span> <span style="color: #f8f8f2">a</span> <span style="color: #f92672">&lt;</span> <span style="color: #f8f8f2">n:</span>
+            <span style="color: #66d9ef">yield</span> <span style="color: #f8f8f2">a</span>
+            <span style="color: #f8f8f2">a,</span> <span style="color: #f8f8f2">b</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">b,</span> <span style="color: #f8f8f2">a</span> <span style="color: #f92672">+</span> <span style="color: #f8f8f2">b</span>
+
+<span style="color: #f8f8f2">result</span> <span style="color: #f92672">=</span> <span style="color: #f8f8f2">sum(Math</span><span style="color: #f92672">.</span><span style="color: #f8f8f2">fib(</span><span style="color: #ae81ff">42</span><span style="color: #f8f8f2">))</span>
+<span style="color: #f8f8f2">print(</span><span style="color: #e6db74">"The answer is {}"</span><span style="color: #f92672">.</span><span style="color: #f8f8f2">format(result))</span>
+</pre></div>
+</div><div>
+<h4 id="native">native</h4>
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%;"><span></span><span style="color: #6ebf26; font-weight: bold">from</span> <span style="color: #71adff; text-decoration: underline">typing</span> <span style="color: #6ebf26; font-weight: bold">import</span> <span style="color: #d0d0d0">Iterator</span>
+
+<span style="color: #ababab; font-style: italic"># This is an example</span>
+<span style="color: #6ebf26; font-weight: bold">class</span> <span style="color: #71adff; text-decoration: underline">Math</span><span style="color: #d0d0d0">:</span>
+   <span style="color: #ffa500">@staticmethod</span>
+   <span style="color: #6ebf26; font-weight: bold">def</span> <span style="color: #71adff">fib</span><span style="color: #d0d0d0">(n:</span> <span style="color: #2fbccd">int</span><span style="color: #d0d0d0">)</span> <span style="color: #d0d0d0">-&gt;</span> <span style="color: #d0d0d0">Iterator[</span><span style="color: #2fbccd">int</span><span style="color: #d0d0d0">]:</span>
+      <span style="color: #ed9d13">""" Fibonacci series up to n """</span>
+      <span style="color: #d0d0d0">a,</span> <span style="color: #d0d0d0">b</span> <span style="color: #d0d0d0">=</span> <span style="color: #51b2fd">0</span><span style="color: #d0d0d0">,</span> <span style="color: #51b2fd">1</span>
+      <span style="color: #6ebf26; font-weight: bold">while</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">&lt;</span> <span style="color: #d0d0d0">n:</span>
+            <span style="color: #6ebf26; font-weight: bold">yield</span> <span style="color: #d0d0d0">a</span>
+            <span style="color: #d0d0d0">a,</span> <span style="color: #d0d0d0">b</span> <span style="color: #d0d0d0">=</span> <span style="color: #d0d0d0">b,</span> <span style="color: #d0d0d0">a</span> <span style="color: #d0d0d0">+</span> <span style="color: #d0d0d0">b</span>
+
+<span style="color: #d0d0d0">result</span> <span style="color: #d0d0d0">=</span> <span style="color: #2fbccd">sum</span><span style="color: #d0d0d0">(Math.fib(</span><span style="color: #51b2fd">42</span><span style="color: #d0d0d0">))</span>
+<span style="color: #2fbccd">print</span><span style="color: #d0d0d0">(</span><span style="color: #ed9d13">"The answer is {}"</span><span style="color: #d0d0d0">.format(result))</span>
+</pre></div>
+</div><div>
+<h4 id="fruity">fruity</h4>
+<div class="highlight" style="background: #111111"><pre style="line-height: 125%;"><span></span><span style="color: #fb660a; font-weight: bold">from</span> <span style="color: #ffffff">typing</span> <span style="color: #fb660a; font-weight: bold">import</span> <span style="color: #ffffff">Iterator</span>
+
+<span style="color: #008800; font-style: italic; background-color: #0f140f"># This is an example</span>
+<span style="color: #fb660a; font-weight: bold">class</span> <span style="color: #ffffff">Math:</span>
+   <span style="color: #ffffff">@staticmethod</span>
+   <span style="color: #fb660a; font-weight: bold">def</span> <span style="color: #ff0086; font-weight: bold">fib</span><span style="color: #ffffff">(n:</span> <span style="color: #ffffff">int)</span> <span style="color: #ffffff">-&gt;</span> <span style="color: #ffffff">Iterator[int]:</span>
+      <span style="color: #0086d2">""" Fibonacci series up to n """</span>
+      <span style="color: #ffffff">a,</span> <span style="color: #ffffff">b</span> <span style="color: #ffffff">=</span> <span style="color: #0086f7; font-weight: bold">0</span><span style="color: #ffffff">,</span> <span style="color: #0086f7; font-weight: bold">1</span>
+      <span style="color: #fb660a; font-weight: bold">while</span> <span style="color: #ffffff">a</span> <span style="color: #ffffff">&lt;</span> <span style="color: #ffffff">n:</span>
+            <span style="color: #fb660a; font-weight: bold">yield</span> <span style="color: #ffffff">a</span>
+            <span style="color: #ffffff">a,</span> <span style="color: #ffffff">b</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">b,</span> <span style="color: #ffffff">a</span> <span style="color: #ffffff">+</span> <span style="color: #ffffff">b</span>
+
+<span style="color: #ffffff">result</span> <span style="color: #ffffff">=</span> <span style="color: #ffffff">sum(Math.fib(</span><span style="color: #0086f7; font-weight: bold">42</span><span style="color: #ffffff">))</span>
+<span style="color: #ffffff">print(</span><span style="color: #0086d2">"The answer is {}"</span><span style="color: #ffffff">.format(result))</span>
+</pre></div>
+</div><p>There are others such as <code class="docutils literal notranslate"><span class="pre">solarized-dark</span></code>, <code class="docutils literal notranslate"><span class="pre">gruvbox-dark</span></code> and many more!</p>
+</details></div>
+<div class="important admonition">
+<p class="admonition-title">Demonstation</p>
+<div class="tab-set docutils container">
+<input checked="True" class="tab-input" id="tab-set--0-input--1" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--1">One Dark</label><div class="tab-content docutils container">
+<p>This image is basically the console output with this theme, generated by fastero itself</p>
+<img alt="../_images/one_dark_theme_demo.png" src="../_images/one_dark_theme_demo.png"/>
+</div>
+<input class="tab-input" id="tab-set--0-input--2" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--2">Material</label><div class="tab-content docutils container">
+<p>This image is basically the console output with this theme, generated by fastero itself</p>
+<img alt="../_images/material_theme_demo.png" src="../_images/material_theme_demo.png"/>
+</div>
+<input class="tab-input" id="tab-set--0-input--3" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--3">Dracula</label><div class="tab-content docutils container">
+<p>This image is basically the console output with this theme, generated by fastero itself</p>
+<img alt="../_images/dracula_theme_demo.png" src="../_images/dracula_theme_demo.png"/>
+</div>
+<input class="tab-input" id="tab-set--0-input--4" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--4">Monokai</label><div class="tab-content docutils container">
+<p>This image is basically the console output with this theme, generated by fastero itself</p>
+<img alt="../_images/monokai_theme_demo.png" src="../_images/monokai_theme_demo.png"/>
+</div>
+<input class="tab-input" id="tab-set--0-input--5" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--5">Native</label><div class="tab-content docutils container">
+<p>This image is basically the console output with this theme, generated by fastero itself</p>
+<img alt="../_images/native_theme_demo.png" src="../_images/native_theme_demo.png"/>
+</div>
+<input class="tab-input" id="tab-set--0-input--6" name="tab-set--0" type="radio"/><label class="tab-label" for="tab-set--0-input--6">Fruity</label><div class="tab-content docutils container">
+<p>This image is basically the console output with this theme, generated by fastero itself</p>
+<img alt="../_images/fruity_theme_demo.png" src="../_images/fruity_theme_demo.png"/>
+</div>
+</div>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"f'{1}'"</span> <span class="s2">"'{}'.format(1)"</span> -n <span class="s2">"f-string"</span> -n <span class="s2">"str.format()"</span> --code-theme monokai
+</pre></div>
+</div>
+</div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-t">
+<span id="cmdoption-total-time"></span><span class="sig-name descname"><span class="pre">-t</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--total-time</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;TIME&gt;</span></span><a class="headerlink" href="#cmdoption-t" title="Permalink to this definition">#</a></dt>
+<dd><p>How long to test each snippet for. Format: 500ms, 10s, 1m5s, 1.5m, 1h40m15s, etc.</p>
+<div class="default admonition">
+<p class="admonition-title"><strong>Default</strong></p>
+<p>The default duration for benchmarking each code snippet is <strong>3 seconds</strong></p>
+</div>
+<p>The algorithm is simple, it gets the <code class="docutils literal notranslate"><span class="pre">--time-per-batch</span></code> parameter (by default 200ms), figures out how
+many runs will be done within that time. Then calculates how many batches will be possible within this <code class="docutils literal notranslate"><span class="pre">&lt;TIME&gt;</span></code>,
+and that’s your run count, manually specifying --runs overrides this. To control the maximum and minimum you can use
+<a class="reference external" href="#cmdoption-M">--max-runs</a> and <a class="reference external" href="#cmdoption-m">--min-runs</a> respectively.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="#cmdoption-b">--time-per-batch</a></p>
+</div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-b">
+<span id="cmdoption-time-per-batch"></span><span class="sig-name descname"><span class="pre">-b</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--time-per-batch</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;TIME&gt;</span></span><a class="headerlink" href="#cmdoption-b" title="Permalink to this definition">#</a></dt>
+<dd><p>How long each test batch will last for, increase this to make the tests more accurate at the cost of
+making progress bar less smooth.</p>
+<div class="default admonition">
+<p class="admonition-title"><strong>Default</strong></p>
+<p>The default duration for each batch is <strong>200 milliseconds</strong></p>
+</div>
+<p>Also change <code class="docutils literal notranslate"><span class="pre">--total-time</span></code> accordingly or else statistics won’t work when it can only do a single batch,
+therefore it can’t determine the mean, median, standard deviation etc.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="#cmdoption-t">--total-time</a></p>
+</div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-u">
+<span id="cmdoption-time-unit"></span><span class="sig-name descname"><span class="pre">-u</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--time-unit</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;UNIT&gt;</span></span><a class="headerlink" href="#cmdoption-u" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the time unit to be used. Possible values: ns, us, ms, s, dynamic</p>
+<div class="default admonition">
+<p class="admonition-title"><strong>Default</strong></p>
+<p>The default the time unit is <strong>dynamic</strong> meaning it depends on the time itself,
+it is generally the best possible unit for the time.</p>
+</div>
+<div class="caution admonition">
+<p class="admonition-title">Applications</p>
+<p>This applies to the the console output and the
+<code class="docutils literal notranslate"><span class="pre">asciidoc</span></code>, <code class="docutils literal notranslate"><span class="pre">markdown</span></code>, <code class="docutils literal notranslate"><span class="pre">html</span></code>, <code class="docutils literal notranslate"><span class="pre">svg</span></code>, <code class="docutils literal notranslate"><span class="pre">png</span></code>, and <code class="docutils literal notranslate"><span class="pre">plot</span></code> export options</p>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>fastero <span class="s2">"f'{1}'"</span> <span class="s2">"'{}'.format(1)"</span> -n <span class="s2">"f-string"</span> -n <span class="s2">"str.format()"</span> --time-unit ms
+</pre></div>
+</div>
+<details>
+<summary>
+Output</summary><p>If the image below looks blurry then click it to open it in fullscreen</p>
+<a class="reference internal image-reference" href="../_images/time_unit_demo.png"><img alt="Output image" src="../_images/time_unit_demo.png" style="width: 1292px;"/></a>
+</details></div>
+<div class="admonition-available-values admonition">
+<p class="admonition-title">Available Values</p>
+<ul class="simple">
+<li><p><strong>ns</strong> (nanoseconds)</p></li>
+<li><p><strong>us</strong> (microseconds)</p></li>
+<li><p><strong>ms</strong> (milliseconds)</p></li>
+<li><p><strong>s</strong> (seconds)</p></li>
+<li><p><strong>dynamic</strong> (dynamic value)</p></li>
+</ul>
+</div>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-r">
+<span id="cmdoption-runs"></span><span class="sig-name descname"><span class="pre">-r</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--runs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;NUM&gt;</span></span><a class="headerlink" href="#cmdoption-r" title="Permalink to this definition">#</a></dt>
+<dd><p>Perform exactly NUM runs for each snippet. By default, the number of runs is automatically determined</p>
+<p>This is not guaranteed and there may be a maximum of 2 more runs if NUM isn’t divisible by 3</p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-m">
+<span id="cmdoption-min-runs"></span><span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--min-runs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;NUM&gt;</span></span><a class="headerlink" href="#cmdoption-m" title="Permalink to this definition">#</a></dt>
+<dd><p>Perform at least NUM runs for each snippet</p>
+<p>This exists to aid in controlling the algorithm mentioned in <a class="reference external" href="#cmdoption-t">--total-time</a></p>
+</dd></dl>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-0">
+<span id="cmdoption-1"></span><span class="sig-name descname"><span class="pre">-m</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--min-runs</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;NUM&gt;</span></span><a class="headerlink" href="#cmdoption-0" title="Permalink to this definition">#</a></dt>
+<dd><p>Perform at most NUM runs for each snippet</p>
+<p>This exists to aid in controlling the algorithm mentioned in <a class="reference external" href="#cmdoption-t">--total-time</a></p>
+</dd></dl>
+<p>For information about the exporting options, see <a class="reference internal" href="exporting.html#exporting-reference"><span class="std std-ref">Exporting</span></a> or
+if you only want to see the parameters see <a class="reference internal" href="cli_reference_automated.html#cli-reference-automated"><span class="std std-ref">CLI Reference (Automated)</span></a></p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="cli_reference_automated.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">CLI Reference (Automated)</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="quickstart.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Quickstart</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Arian Mollik Wasi
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">CLI Reference</a><ul>
+<li><a class="reference internal" href="#fastero">fastero</a><ul>
+<li><a class="reference internal" href="#arguments">Arguments</a></li>
+<li><a class="reference internal" href="#options">Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/tabs.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    </body>
+</html>
