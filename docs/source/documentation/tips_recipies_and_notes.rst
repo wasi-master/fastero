@@ -18,6 +18,7 @@ Tips, Recipies, and Notes
    :twitter:title: Fastero Documentation - Tips, Recipies, and Notes
    :twitter:image: https://i.ibb.co/ysbFf3b/python-http-library-benchmark.png
    :twitter:description: Python timeit CLI for the 21st century. Fastero is a beautiful and flexible timeit (cli) alternative that you have to check out
+   :google-site-verification: upUCfyFeU0JcauOrq_fs4NssKvSo3FzLEnJBTWDBiHY
 
 
 .. role:: python(code)
@@ -76,3 +77,4 @@ Due to this reason. Using very low run count will result in a 100-400 nanosecond
 This will not matter most of the time. Because, if you are dealing with code so fast that
 this is gonna matter, the run count will probably be very high so it won't matter anymore.
 But I would still like to mention it here in case someone's wondering
+g

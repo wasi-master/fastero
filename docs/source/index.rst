@@ -23,6 +23,7 @@ Fastero
    :twitter:title: Fastero Documentation
    :twitter:image: https://i.ibb.co/ysbFf3b/python-http-library-benchmark.png
    :twitter:description: Python timeit CLI for the 21st century. Fastero is a beautiful and flexible timeit (CLI) alternative that you have to check out
+   :google-site-verification: upUCfyFeU0JcauOrq_fs4NssKvSo3FzLEnJBTWDBiHY
 
 .. toctree::
    :hidden:

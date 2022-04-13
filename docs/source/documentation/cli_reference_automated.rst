@@ -20,6 +20,7 @@ CLI Reference (Automated)
    :twitter:title: Fastero Documentation - CLI Reference
    :twitter:image: https://i.ibb.co/ysbFf3b/python-http-library-benchmark.png
    :twitter:description: Python timeit CLI for the 21st century. Fastero is a beautiful and flexible timeit (cli) alternative that you have to check out
+   :google-site-verification: upUCfyFeU0JcauOrq_fs4NssKvSo3FzLEnJBTWDBiHY
 
 This is a automatically written CLI Reference.
 It has exactly the same content as the ``--help`` parameter.
