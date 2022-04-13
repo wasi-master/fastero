@@ -41,7 +41,7 @@ the ``--export-json`` flag
     .. code-block:: json
 
         {
-            "$schema": "https://api.jsonbin.io/b/625164e2d8a4cc06909e3be7/5",
+            "$schema": "https://raw.githubusercontent.com/wasi-master/fastero/main/schema.json",
             "setup": "pass",
             "results": [
                 {
