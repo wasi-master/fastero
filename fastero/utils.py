@@ -23,7 +23,7 @@ from rich.text import Text
 from rich.panel import Panel
 from rich.syntax import Syntax
 
-time_regex = re.compile(r"(\d{1,5}(?:[.,]?\d{1,5})?)((?:ms|s|m|h|d)?)")
+time_regex = re.compile(r"(\d{1,5}(?:[.,]?\d{1,5})?)((?:ns|us|ms|s|m|h|d)?)")
 time_dict = {"ns": 1e-09, "us": 1e-06, "ms": 0.001, "s": 1, "m": 60, "h": 3600, "d": 86400}
 TIME_FORMAT_UNITS = ["ns", "us", "ms", "s", "dynamic"]
 
