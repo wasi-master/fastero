@@ -511,14 +511,17 @@ def app(
             timings = [time_taken_for_entire_batch / num_in_one_batch for time_taken_for_entire_batch in raw_timings]
 
         # Calculate mean, median, standard_deviation, min, max
-        mean = statistics.mean(timings)
-        median = statistics.median(timings)
         _min = min(timings)
         _max = max(timings)
-        try:
+        # If there aren't enough data then we just make the statistics -1
+        if len(timings) < 2:
+            # In an ideal world I would like to use "?" but
+            # it would probably mess something else up now.
+            mean = median = standard_deviation = -1
+        else:
+            mean = statistics.mean(timings)
+            median = statistics.median(timings)
             standard_deviation = statistics.stdev(timings)
-        except statistics.StatisticsError:
-            standard_deviation = -1
 
         # Add the statistics to a exporter class to keep track of them
         console.exporter.add_result(
