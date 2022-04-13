@@ -9,9 +9,11 @@
 
 </div>
 
-## Installation
+## Installation & Usage
 
 Install either with pipx or pip. Both work, use what you want. Or optionally you can install from github using `pip install git+https://github.com/wasi-master/fastero`
+
+For usage please check out [the documentation](https://fastero.readthedocs.io)
 
 ## Features
 
