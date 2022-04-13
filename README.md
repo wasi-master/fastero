@@ -7,8 +7,6 @@
 
 [**Read the Documentation**](https://fastero.readthedocs.io)
 
-<img src="https://github.com/wasi-master/fastero/raw/main/examples/export/python_http_library_benchmark.png" height=600>
-
 </div>
 
 ## Installation
