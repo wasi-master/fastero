@@ -1,5 +1,6 @@
 sphinx
 
+furo
 sphinx_click
 sphinx_favicon
 sphinx_inline_tabs
