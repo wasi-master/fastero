@@ -91,6 +91,8 @@ console.stateful_data = {}
 console.exporter = Exporter(console=console, alt_console=alt_console)
 # Setting the color profile to the one from rich. To be consistent.
 set_prompt_toolkit_color()
+# Defining an infinity constant
+INFINITY = float('inf')
 
 
 @click.command()
@@ -440,9 +442,8 @@ def app(
                     timer.timeit(number=1)
                     progress.update(warmup_task, advance=1)
                 progress.remove_task(warmup_task)
-            initial_task = progress.add_task("Calculating amount of runs…", total=1, start=False)
 
-            def _autorange(timer: Timer, callback=None):
+            def _autorange(timer: Timer, callback=None, max_number=INFINITY):
                 # This is a custom timeit.autorange implementation for lower time_taken.
                 # This is done to make the progress bar more smoother.
                 # This does have one drawback where it makes it slower if there is a long setup
@@ -455,6 +456,8 @@ def app(
                 while True:
                     for j in 1, 2, 5, 8:
                         number = i * j
+                        if number > max_number:
+                            return number, time_taken
                         time_taken = timer.timeit(number)
                         if callback:
                             callback(number, time_taken)
@@ -463,16 +466,17 @@ def app(
                             return (number, time_taken)
                     i *= 10
 
-            # determine number so that 0.1 <= total time < 2.0
-            try:
-                num_in_one_batch, time_taken = _autorange(timer, autorange_callback)
-            except Exception:
-                timer.print_exc()
-                raise click.exceptions.Exit()
-            progress.remove_task(initial_task)
 
             # Logic for calculating number of total runs
             if not runs:
+                initial_task = progress.add_task("Calculating amount of runs…", total=1, start=False)
+                # determine number so that 0.1 <= total time < 2.0
+                try:
+                    num_in_one_batch, time_taken = _autorange(timer, autorange_callback)
+                except Exception:
+                    timer.print_exc()
+                    raise click.exceptions.Exit()
+                progress.remove_task(initial_task)
                 num_of_batches = int(total_time / time_taken)
                 total_runs_based_on_time = num_of_batches * num_in_one_batch
                 if (total_runs_based_on_time) < min_runs:
@@ -480,6 +484,13 @@ def app(
                 if max_runs and (total_runs_based_on_time) > max_runs:
                     num_of_batches = max_runs // num_in_one_batch
             else:
+                with console.status("Calculating amount of runs…"):
+                    # determine number so that 0.1 <= total time < 2.0
+                    try:
+                        num_in_one_batch, time_taken = _autorange(timer, autorange_callback, max_number=runs)
+                    except Exception:
+                        timer.print_exc()
+                        raise click.exceptions.Exit()
                 if runs > num_in_one_batch:
                     num_of_batches = runs // num_in_one_batch
                 else:
