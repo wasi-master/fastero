@@ -15,4 +15,6 @@
   - [ ] Should make `--option` dimmed
   - [ ] Should make the first word some color
   - [ ] Should make strings some color
-- [ ] Compile the code before executing
+- [ ] Test compile the code using the `compile()` function before benchmarking. This should be done so that
+      any syntax errors can be caught before benchmarking multiple snippets [for a long time] and then it all
+      going to waste because of the last snippet having some problem.
