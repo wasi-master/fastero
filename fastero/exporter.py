@@ -101,7 +101,7 @@ class Exporter:
             with open(filename, "w", encoding="utf-8") as f:
                 json.dump(
                     {
-                        "$schema": "https://api.jsonbin.io/b/625164e2d8a4cc06909e3be7/5",
+                        "$schema": "https://raw.githubusercontent.com/wasi-master/fastero/main/schema.json",
                         "setup": self.setup,
                         "results": self.snippets,
                     },
