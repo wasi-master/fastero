@@ -1,0 +1,21 @@
+{
+    "setup": "import urllib, urllib3, requests, httpx\n\nURL = \"https://httpbin.org/bytes/100000\"",
+    "results": [
+        {
+            "snippet_code": "urllib.request.urlopen(URL)",
+            "snippet_name": "urllib"
+        },
+        {
+            "snippet_code": "urllib3.PoolManager().request(\"GET\", URL)",
+            "snippet_name": "urllib3"
+        },
+        {
+            "snippet_code": "requests.get(URL)",
+            "snippet_name": "requests"
+        },
+        {
+            "snippet_code": "httpx.get(URL)",
+            "snippet_name": "httpx"
+        }
+    ]
+}

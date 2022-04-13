@@ -1,0 +1,14 @@
+{
+    "python.linting.pylamaEnabled": true,
+    "python.linting.enabled": true,
+    "cSpell.words": [
+        "fastero",
+        "gcold",
+        "isenabled",
+        "smhd",
+        "stdev",
+        "stmtprefix",
+        "timeit"
+    ],
+    "esbonio.sphinx.confDir": "${workspaceFolder}\\docs\\source"
+}

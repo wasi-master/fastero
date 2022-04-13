@@ -1,0 +1,16 @@
+.admonition.default {
+    border-color: var(--color-admonition-title);
+}
+.admonition.default > .admonition-title {
+    background-color: var(--color-admonition-title-background);
+    border-color: var(--color-admonition-title);
+}
+.admonition.default > .admonition-title::before {
+    background-color: var(--color-admonition-title);
+    -webkit-mask-image: var(--icon-info);
+    mask-image: var(--icon--info);
+}
+
+code, kbd, pre, samp {
+    font-feature-settings: "cv01", "cv02", "cv04", "ss05", "ss03", "cv30" !important;
+}

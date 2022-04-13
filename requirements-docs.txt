@@ -1,0 +1,9 @@
+sphinx
+
+sphinx_click
+sphinx_favicon
+sphinx_inline_tabs
+sphinx_copybutton
+sphinx_rst_builder  # Optional, for testing purposes only
+pygments-csv-lexer  # Optional, for CSV highlighting
+sphinxcontrib.details.directive

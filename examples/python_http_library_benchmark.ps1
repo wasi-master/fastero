@@ -1,0 +1,13 @@
+python -m fastero `
+    --from-json export/python_http_library_benchmark.json.bak `
+    --runs 25 `
+    --code-theme material `
+    --export-json export/python_http_library_benchmark.json `
+    --export-csv export/python_http_library_benchmark.csv `
+    --export-yaml export/python_http_library_benchmark.yaml `
+    --export-markdown export/python_http_library_benchmark.md `
+    --export-svg export/python_http_library_benchmark.svg `
+    --export-asciidoc export/python_http_library_benchmark.adoc `
+    --export-image export/python_http_library_benchmark.png `
+    --export-plot export/python_http_library_benchmark_plot.png `
+    --label-format "{snippet_name}"

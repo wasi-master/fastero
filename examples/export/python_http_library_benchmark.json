@@ -1,0 +1,46 @@
+{
+    "$schema": "https://api.jsonbin.io/b/625164e2d8a4cc06909e3be7/5",
+    "setup": "import urllib, urllib3, requests, httpx\n\nURL = \"https://httpbin.org/bytes/100000\"",
+    "results": [
+        {
+            "snippet_code": "urllib.request.urlopen(URL)",
+            "snippet_name": "urllib",
+            "runs": 25,
+            "mean": 1.4753116880000001,
+            "median": 1.3756760000000021,
+            "min": 1.2867149000000002,
+            "max": 2.3041313999999993,
+            "stddev": 0.2597907645794356
+        },
+        {
+            "snippet_code": "urllib3.PoolManager().request(\"GET\", URL)",
+            "snippet_name": "urllib3",
+            "runs": 25,
+            "mean": 2.393063924000001,
+            "median": 2.3036981000000054,
+            "min": 2.1035829000000064,
+            "max": 3.1865464000000046,
+            "stddev": 0.2596933302856841
+        },
+        {
+            "snippet_code": "requests.get(URL)",
+            "snippet_name": "requests",
+            "runs": 25,
+            "mean": 2.2945496360000006,
+            "median": 2.1931103000000007,
+            "min": 2.0368500000000154,
+            "max": 2.9061352999999883,
+            "stddev": 0.2234703351017371
+        },
+        {
+            "snippet_code": "httpx.get(URL)",
+            "snippet_name": "httpx",
+            "runs": 25,
+            "mean": 2.2010564999999995,
+            "median": 2.1679903999999794,
+            "min": 2.079787600000003,
+            "max": 2.423898200000025,
+            "stddev": 0.104432339515394
+        }
+    ]
+}

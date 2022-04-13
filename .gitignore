@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Backup files
+*.bak
+
+# Logo Source File
+logo.psd
+
 # Distribution / packaging
 .Python
 build/
