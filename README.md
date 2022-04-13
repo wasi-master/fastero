@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./logo.png" width=200>
+<img src="https://github.com/wasi-master/fastero/raw/main/logo.png" width=200>
 
 # fastero
  Python timeit CLI for the 21st century
@@ -15,11 +15,13 @@ Install either with pipx or pip. Both work, use what you want. Or optionally you
 
 ## Features
 
-- 🌟 *Beautiful* formatted, colored, opionated, and ~~copied~~ output. Output is reminiscent of [hyperfine](https://github.com/sharkdp/hyperfine)
+For more info on all of these features, please the [documentation]((https://fastero.readthedocs.io))
+
+- 🌟 *Beautiful* formatted, and colored output. Output is reminiscent of [hyperfine](https://github.com/sharkdp/hyperfine)
 - 🤯 *Amazing* exporting options
   - 📊 Export as a bar plot with matplotlib
   - 🌃 Export as a *beautiful* image with the console output
-  - ℹ Export as Markdown, HTML, CSV, AsciiDoc tables
+  - ℹ️ Export as Markdown, HTML, CSV, AsciiDoc tables
   - 💾 Export as JSON and YAML data to use them elsewhere
     - 🔁 You can also import the JSON data later within
       fastero to re-run the benchmark with the same parameters
@@ -42,7 +44,7 @@ Install either with pipx or pip. Both work, use what you want. Or optionally you
   - 🔟 Or specify a definite number of runs for manual override
 - 💻 Cross-platform.
 - 🤯 Open source.
-<!-- - 📚 Extensive documentation. -->
+- 📚 Extensive documentation.
 
 ### Acknowledgements
 
