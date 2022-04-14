@@ -621,7 +621,8 @@ class Exporter:
                 from PIL import Image, ImageChops
             except ImportError:
                 self.alt_console.print(
-                    "[red b]Error:[/] The package [#bbbbbb on #222222]Pillow[/] is not installed. Please install it in order to export images."
+                    "[red b]Error:[/] The package [#bbbbbb on #222222]Pillow[/] is not installed. Please install it in order to export images. "
+                    f"An uncropped version of your image is saved in [yellow]{png_file_location}[/]"
                 )
                 raise click.exceptions.Exit()
 
