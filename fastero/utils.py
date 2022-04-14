@@ -9,6 +9,7 @@ from typing import List, Union
 import click
 from pygments.lexers.python import PythonLexer
 from pygments.styles import get_style_by_name
+from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.styles import Style, merge_styles
 from prompt_toolkit.styles.pygments import style_from_pygments_cls
@@ -67,6 +68,42 @@ def prompt_continuation(width, line_number, wrap_count):
     return HTML(f'<style fg="#aaaaaa">{text} </style>')
 
 
+def get_python_completer():
+    try:
+        import ptpython
+    except ImportError:
+        import keyword, builtins, types
+
+        def find_description(item):
+            if keyword.iskeyword(item):
+                return HTML("<ansimagenta>keyword</ansimagenta>")
+            elif item.endswith("Error"):
+                return HTML("<ansired>exception</ansired>")
+            elif item.endswith("Warning"):
+                return HTML("<ansiyellow>warning</ansiyellow>")
+            item = eval(item)
+            if isinstance(item, types.BuiltinFunctionType):
+                return HTML("<ansigreen>built-in function</ansigreen>")
+            return HTML(f"<ansicyan>{type(item).__name__}</ansicyan>")
+
+        keywords_and_builtins = list(set(keyword.kwlist + dir(builtins)))
+        return WordCompleter(
+            keywords_and_builtins,
+            meta_dict={i: find_description(i) for i in keywords_and_builtins}
+        )
+    else:
+        from ptpython.completer import PythonCompleter, JediCompleter
+
+        try:
+            import jedi
+        except ImportError:
+            return PythonCompleter(lambda: {}, lambda: {})
+        else:
+            del jedi
+            return JediCompleter(lambda: {}, lambda: {})
+
+
+
 def get_code_input(_prompt="Enter code ", theme="dracula"):
     """
     Ask the use to enter some code as input.
@@ -112,12 +149,19 @@ def get_code_input(_prompt="Enter code ", theme="dracula"):
         ("class:line_num", "1 "),
     ]
 
+    completer = get_python_completer()
+
+    def bottom_toolbar():
+        return HTML(f'Autocomplete: <b><style bg="ansired">{completer.__class__.__name__}</style></b>!')
+
     try:
         text = prompt(
             message,
             multiline=True,
             style=style,
             lexer=PygmentsLexer(PythonLexer),
+            completer=completer,
+            bottom_toolbar=bottom_toolbar,
             validator=PythonCodeValidator(),
             validate_while_typing=False,
             prompt_continuation=prompt_continuation,
