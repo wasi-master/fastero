@@ -92,15 +92,9 @@ def get_python_completer():
             meta_dict={i: find_description(i) for i in keywords_and_builtins}
         )
     else:
-        from ptpython.completer import PythonCompleter, JediCompleter
+        from ptpython.completer import PythonCompleter
 
-        try:
-            import jedi
-        except ImportError:
-            return PythonCompleter(lambda: {}, lambda: {})
-        else:
-            del jedi
-            return JediCompleter(lambda: {}, lambda: {})
+        return PythonCompleter(lambda: {}, lambda: {}, lambda: False)
 
 
 
