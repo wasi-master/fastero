@@ -40,6 +40,7 @@ the ``--export-json`` flag
     This will save a ``foo.json`` file with the following contents:
 
     .. code-block:: json
+        :caption: foo.json
 
         {
             "$schema": "https://raw.githubusercontent.com/wasi-master/fastero/main/schema.json",
@@ -97,6 +98,7 @@ To export a :term:`CSV` file, use the following command:
     This will save a ``foo.csv`` file with the following contents:
 
     .. code-block:: csv
+        :caption: foo.csv
 
         Snippet Code,Snippet Name,Runs,Mean,Median,Min,Max,Standard Deviation
         str(1),Benchmark 1,22000000,1.3751392272727268e-07,1.370651999999999e-07,1.3411479999999997e-07,1.464300999999999e-07,3.5374505786910588e-09
@@ -126,6 +128,7 @@ the ``--export-yaml`` flag
     This will save a ``foo.yaml`` file with the following contents:
 
     .. code-block:: yaml
+        :caption: foo.yaml
 
         results:
         - max: 1.4413549999999997e-07
@@ -160,6 +163,7 @@ To export your results as a :term:`Markdown` table, use the ``--export-markdown`
     This will save a ``foo.md`` file with the following contents:
 
     .. code-block:: markdown
+        :caption: foo.md
 
         |Snippet Code|Snippet Name|Runs|Mean|Median|Min|Max|Standard Deviation|
         |---|---|---|---|---|---|---|---|
@@ -189,6 +193,7 @@ To export your results as a :term:`AsciiDoc` table, use the ``--export-asciidoc`
     This will save a ``foo.adoc`` file with the following contents:
 
     .. code-block:: asciidoc
+        :caption: foo.adoc
 
         [cols=",,,,,,," options="header"]
         |===
@@ -222,6 +227,7 @@ To export your console output as a :term:`SVG` file, use the ``--export-svg`` op
     .. details:: This will save a ``foo.svg`` file with the following contents
 
         .. code-block:: html
+            :caption: foo.svg
 
             <svg width="2050.3999999999996" height="670" viewBox="0 0 2050.3999999999996 670"
                 xmlns="http://www.w3.org/2000/svg">
