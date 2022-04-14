@@ -127,6 +127,13 @@ def get_code_input(_prompt="Enter code ", theme="dracula"):
         return None
     return text
 
+def factors(n):
+    return sorted(
+        set(
+            factor for i in range(1, int(n**0.5) + 1) if n % i == 0
+            for factor in (i, n//i)
+        )
+    )
 
 class PythonCodeValidator(Validator):
     """Validator for Python code."""

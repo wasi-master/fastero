@@ -17,7 +17,7 @@ from rich.syntax import Syntax
 from .__init__ import __version__ as VERSION
 from .utils import (MofNCompleteColumn, StatefulColumn, Time, TIME_FORMAT_UNITS,
                     get_code_input, choose_unit, format_snippet, make_bar_plot,
-                    _Timer as Timer
+                    _Timer as Timer, factors
                     )
 from .exporter import Exporter
 
@@ -494,9 +494,18 @@ def app(
                 if runs > num_in_one_batch:
                     num_of_batches = runs // num_in_one_batch
                 else:
-                    # Do it in three batches to get better statistics
-                    num_of_batches = 3
-                    num_in_one_batch = ceil(runs / 3)
+                    if runs < 3:
+                        # If there are less than 3 runs then we can probably do it in one batch
+                        num_of_batches = 1
+                        num_in_one_batch = 1
+                    else:
+                        # Otherwise, we try to do it in 3 batches
+                        num_of_batches = 3
+                        num_in_one_batch = ceil(runs / 3)
+                        # If it's not divisible by 3 then we try 2
+                        if (num_of_batches * num_in_one_batch) != runs:
+                            num_of_batches = 2
+                            num_in_one_batch = ceil(runs / 2)
             total_runs = num_of_batches * num_in_one_batch
 
             # Start the actual benchmarking process
