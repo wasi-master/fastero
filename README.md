@@ -33,7 +33,7 @@ For more info on all of these features, please the [documentation]((https://fast
   - 🔤 Assign a name to each snippet to make it easier to distinguish
   - 📈 Get nice statistics about the each of the snippet and
     a summary on how fast each of them are compared to each other
-- ↩ Enter multiline code in an input with syntax highlighting
+- ↩ Enter *multiline* code in an input with **syntax highlighting** and ***amazing* autocomplete**
 - ⏰ Excellent time parsing. Inputs like `500ms`, `10s`, `1m5s`, `1.5m`, `1h30m15s`, etc. work flawlessly
 - 🔥 Run a few times without timing with the warmup parameter to fill
   caches and things like that.
