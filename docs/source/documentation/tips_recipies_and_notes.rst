@@ -81,7 +81,7 @@ But I would still like to mention it here in case someone's wondering
 Programmatic Usage
 ------------------
 
-Although fastero isn't meant to be used programmatically, you can use it, with the use of
+Although fastero isn't meant to be used programmatically, you can use it as that, with the use of
 shell commands
 
 .. code-block:: python
@@ -90,4 +90,8 @@ shell commands
    import json
 
    data = json.loads(os.popen("fastero \"str(1)\" \"f'{1}'\" --json --quiet").read())
-   print(data['results'][0]['min'])  # This will output the minimum time required to run "str(1)"
+   print(data['results'][0]['min'])
+
+This will output the minimum time required to run "str(1)".
+The data variable format is same as the format given by the --export-json flg
+
