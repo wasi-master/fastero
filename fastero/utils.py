@@ -1,23 +1,10 @@
 """Utilities to be used for fastero."""
 import sys
 import re
-import time
-from enum import Enum
 import timeit
-from typing import List, Union
 
 import click
-from pygments.lexers.python import PythonLexer
-from pygments.styles import get_style_by_name
-from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.shortcuts import prompt
-from prompt_toolkit.styles import Style, merge_styles
-from prompt_toolkit.styles.pygments import style_from_pygments_cls
-from prompt_toolkit.lexers import PygmentsLexer
-from prompt_toolkit.validation import Validator, ValidationError
-from prompt_toolkit.formatted_text import HTML
 from rich import box
-from rich.console import Console, Group
 from rich.progress import ProgressColumn
 from rich.table import Table
 from rich.text import Text
@@ -31,6 +18,7 @@ TIME_FORMAT_UNITS = ["ns", "us", "ms", "s", "dynamic"]
 
 def convert_time(argument, param):
     """Convert a time argument to a string representing seconds."""
+
 
     if isinstance(argument, (float, int)):
         return argument
@@ -61,6 +49,9 @@ def convert_time(argument, param):
 
 def prompt_continuation(width, line_number, wrap_count):
     """Display line numbers and '->' before soft wraps."""
+
+    from prompt_toolkit.formatted_text import HTML
+
     if wrap_count > 0:
         text = " " * (width - 3) + "➜"
     else:
@@ -69,11 +60,13 @@ def prompt_continuation(width, line_number, wrap_count):
 
 
 def get_python_completer():
+    from prompt_toolkit.formatted_text import HTML
+
     try:
         import ptpython
     except ImportError:
         import keyword, builtins, types
-
+        from prompt_toolkit.completion import WordCompleter
         def find_description(item):
             if keyword.iskeyword(item):
                 return HTML("<ansimagenta>keyword</ansimagenta>")
@@ -115,12 +108,35 @@ def get_code_input(_prompt="Enter code ", theme="dracula"):
         The code that was gotten
     """
 
+    from pygments.lexers.python import PythonLexer
+    from pygments.styles import get_style_by_name
+    from prompt_toolkit.completion import WordCompleter
+    from prompt_toolkit.shortcuts import prompt
+    from prompt_toolkit.styles import Style, merge_styles
+    from prompt_toolkit.styles.pygments import style_from_pygments_cls
+    from prompt_toolkit.lexers import PygmentsLexer
+    from prompt_toolkit.validation import Validator, ValidationError
+    from prompt_toolkit.formatted_text import HTML
+
     try:
         from ptpython.validator import PythonValidator
     except ImportError:
-        pass
-    else:
-        PythonCodeValidator = PythonValidator
+        class PythonValidator(Validator):
+            """Validator for Python code."""
+
+            def validate(self, document):
+                """
+                Validate python code.
+
+                Tries to compile the code using the compile() function and
+                if it fails then raises a ValidationError
+                """
+                text = document.text
+
+                try:
+                    compile(text, "<code>", "exec")
+                except Exception as e:
+                    raise ValidationError(message=str(e), cursor_position=getattr(e, "offset", 0))
 
     code_style = style_from_pygments_cls(get_style_by_name(theme))
     style = merge_styles(
@@ -164,7 +180,7 @@ def get_code_input(_prompt="Enter code ", theme="dracula"):
             lexer=PygmentsLexer(PythonLexer),
             completer=completer,
             bottom_toolbar=bottom_toolbar,
-            validator=PythonCodeValidator(),
+            validator=PythonValidator(),
             validate_while_typing=False,
             prompt_continuation=prompt_continuation,
             include_default_pygments_style=False,
@@ -180,23 +196,6 @@ def factors(n):
             for factor in (i, n//i)
         )
     )
-
-class PythonCodeValidator(Validator):
-    """Validator for Python code."""
-
-    def validate(self, document):
-        """
-        Validate python code.
-
-        Tries to compile the code using the compile() function and
-        if it fails then raises a ValidationError
-        """
-        text = document.text
-
-        try:
-            compile(text, "<code>", "exec")
-        except Exception as e:
-            raise ValidationError(message=str(e), cursor_position=getattr(e, "offset", 0))
 
 
 class Time(click.ParamType):
@@ -321,7 +320,7 @@ class MofNCompleteColumn(ProgressColumn):
         return f"[red]{task.completed:,}/{task.total:,}[/]"
 
 
-def make_bar_plot(labels: List[Text], amounts: List[int], ascii_only: bool = False) -> Panel:
+def make_bar_plot(labels, amounts, ascii_only = False) -> Panel:
     """
     Generate a bar plot to display in the terminal.
 
