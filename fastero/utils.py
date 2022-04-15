@@ -114,6 +114,14 @@ def get_code_input(_prompt="Enter code ", theme="dracula"):
     str
         The code that was gotten
     """
+
+    try:
+        from ptpython.validator import PythonValidator
+    except ImportError:
+        pass
+    else:
+        PythonCodeValidator = PythonValidator
+
     code_style = style_from_pygments_cls(get_style_by_name(theme))
     style = merge_styles(
         [
