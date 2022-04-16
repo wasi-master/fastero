@@ -2,7 +2,6 @@
 
 import click
 
-from .utils import choose_unit, format_snippet
 from rich.console import Console
 from rich.terminal_theme import TerminalTheme
 
@@ -171,6 +170,8 @@ class Exporter:
         unit : str, optional
             The unit to be used, use None for dynamic units. by default None
         """
+        from .utils import choose_unit
+
         with self.alt_console.status("Exporting Markdown"):
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(
@@ -210,6 +211,8 @@ class Exporter:
         unit : str, optional
             The unit to be used, use None for dynamic units. by default None
         """
+        from .utils import choose_unit
+
         with self.alt_console.status("Exporting AsciiDoc"):
             with open(filename, "w", encoding="utf-8") as f:
                 f.write(
@@ -256,6 +259,7 @@ class Exporter:
             The unit to be used, use None for dynamic units. by default None
         """
         from html import escape
+        from .utils import choose_unit
 
         with self.alt_console.status("Exporting HTML"):
             with open(filename, "w", encoding="utf-8") as f:
@@ -654,6 +658,8 @@ class Exporter:
         filename : Union[str, Path]
             The path of the file to where the results will be exported
         """
+        from .utils import choose_unit
+
         def add_value_labels(ax, spacing=5):
             """Add labels to the end of each bar in a bar chart.
 
