@@ -150,7 +150,7 @@ def app(
     export_markdown  : Path,
     export_svg       : Path,
     export_image     : Path,
-    background : str,
+    background       : str,
     selenium_browser : str,
     watermark        : bool,
     export_asciidoc  : Path,
