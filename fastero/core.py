@@ -484,13 +484,14 @@ def app(
                 if max_runs and (total_runs_based_on_time) > max_runs:
                     num_of_batches = max_runs // num_in_one_batch
             else:
-                with console.status("Calculating amount of runs…"):
-                    # determine number so that 0.1 <= total time < 2.0
-                    try:
-                        num_in_one_batch, time_taken = _autorange(timer, autorange_callback, max_number=runs)
-                    except Exception:
-                        timer.print_exc()
-                        raise click.exceptions.Exit()
+                initial_task = progress.add_task("Calculating amount of runs…", total=1, start=False)
+                # determine number so that 0.1 <= total time < 2.0
+                try:
+                    num_in_one_batch, time_taken = _autorange(timer, autorange_callback, max_number=runs)
+                except Exception:
+                    timer.print_exc()
+                    raise click.exceptions.Exit()
+                progress.remove_task(initial_task)
                 if runs > num_in_one_batch:
                     num_of_batches = runs // num_in_one_batch
                 else:
@@ -515,7 +516,7 @@ def app(
                 timed = timer.timeit(num_in_one_batch)
                 raw_timings.append(timed)
                 console.stateful_data[1] = \
-                    f"[green]{choose_unit(raw_timings[-1] / num_in_one_batch, unit=time_unit).rjust(10)}[/]"
+                    f"[green]{choose_unit(raw_timings[-1] / num_in_one_batch, unit=time_unit)}[/]"
                 progress.update(progress_task, advance=num_in_one_batch)
             timings = [time_taken_for_entire_batch / num_in_one_batch for time_taken_for_entire_batch in raw_timings]
 
