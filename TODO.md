@@ -21,3 +21,4 @@
 - [ ] Support adding titles to pots generated using matplotlib. This is really easy to implement.
       There should be some parameter, preferably `--chart-title` and then it's value can then be passed
       on to the export_plot function which then, in turn, would use `plt.title(x)` where x is the title.
+- [ ] Allow specifying which lines to benchmark with the `file:` directive
