@@ -44,7 +44,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.intersphinx',
 
-    "sphinx-favicon",
+    "sphinx_favicon",
     'sphinx_click',
     'sphinx_inline_tabs',
     'sphinx_copybutton',
