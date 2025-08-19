@@ -366,4 +366,118 @@ def make_bar_plot(labels, amounts, ascii_only = False) -> Panel:
 class _Timer(timeit.Timer):
     def __init__(self, *args, **kwargs):
         self.stmt = kwargs.get('stmt')
+        # Store setup for our custom handling
+        self.setup_code = kwargs.get('setup', 'pass')
         super().__init__(*args, **kwargs)
+        
+    def _extract_globals_and_assignments(self, code):
+        """Extract global declarations and top-level assignments that might conflict."""
+        import ast
+        
+        try:
+            tree = ast.parse(code)
+        except SyntaxError:
+            return set(), {}
+            
+        globals_vars = set()
+        assignments = {}
+        
+        # Look at all nodes, including nested ones for global declarations
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Global):
+                globals_vars.update(node.names)
+        
+        # Only look at top-level assignments
+        for node in tree.body:
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name):
+                        var_name = target.id
+                        # Try to get the value if it's a simple constant
+                        if isinstance(node.value, (ast.Constant, ast.Num, ast.Str)):
+                            try:
+                                if hasattr(node.value, 'value'):  # ast.Constant
+                                    assignments[var_name] = node.value.value
+                                elif hasattr(node.value, 'n'):  # ast.Num (older Python)
+                                    assignments[var_name] = node.value.n
+                                elif hasattr(node.value, 's'):  # ast.Str (older Python)
+                                    assignments[var_name] = node.value.s
+                            except:
+                                pass
+                                
+        return globals_vars, assignments
+    
+    def timeit(self, number=timeit.default_number):
+        """Enhanced timeit that handles global variables properly."""
+        # Check if we have a global/assignment conflict
+        if self.stmt:
+            globals_vars, assignments = self._extract_globals_and_assignments(self.stmt)
+            conflicting_vars = globals_vars & assignments.keys()
+            
+            if conflicting_vars:
+                # We have a conflict - need to modify execution
+                return self._timeit_with_globals(number, conflicting_vars, assignments)
+        
+        # No conflict, use standard timeit
+        return super().timeit(number)
+        
+    def _timeit_with_globals(self, number, conflicting_vars, assignments):
+        """Execute timing with proper global variable handling."""
+        import ast
+        import types
+        
+        # Create a modified version of the statement
+        # Remove top-level assignments for conflicting variables
+        tree = ast.parse(self.stmt)
+        
+        # Filter out conflicting assignments from the statement
+        new_body = []
+        for node in tree.body:
+            if isinstance(node, ast.Assign):
+                # Check if this assigns to any conflicting variable
+                assigns_conflicting = False
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id in conflicting_vars:
+                        assigns_conflicting = True
+                        break
+                if not assigns_conflicting:
+                    new_body.append(node)
+            else:
+                new_body.append(node)
+        
+        tree.body = new_body
+        modified_stmt = ast.unparse(tree) if new_body else "pass"
+        
+        # Create a global namespace with the conflicting variables
+        execution_globals = {}
+        execution_globals.update(self.inner.__globals__)
+        
+        # Add the conflicting variables to globals
+        for var in conflicting_vars:
+            if var in assignments:
+                execution_globals[var] = assignments[var]
+        
+        # Create a new timer with modified statement and proper globals
+        # Need to properly indent the modified statement for the loop
+        modified_stmt_lines = modified_stmt.split('\n')
+        indented_stmt = '\n        '.join(modified_stmt_lines)
+        
+        timer_code = f"""
+def inner(_it, _timer):
+    {self.setup_code}
+    _t0 = _timer()
+    for _i in _it:
+        {indented_stmt}
+    _t1 = _timer()
+    return _t1 - _t0
+"""
+        
+        # Execute the timer code in our custom globals
+        local_vars = {}
+        exec(timer_code, execution_globals, local_vars)
+        inner_func = local_vars['inner']
+        
+        # Time the execution
+        it = iter(range(number))
+        timing = inner_func(it, self.timer)
+        return timing
