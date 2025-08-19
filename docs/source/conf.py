@@ -48,7 +48,7 @@ extensions = [
     'sphinx_click',
     'sphinx_inline_tabs',
     'sphinx_copybutton',
-    'sphinx_rst_builder',
+    # 'sphinx_rst_builder',  # Optional extension, disabled due to incompatibility with current Sphinx version
     'sphinxcontrib.details.directive'
 ]
 
