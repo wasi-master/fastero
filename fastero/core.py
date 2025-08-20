@@ -52,7 +52,7 @@ click.rich_click.OPTION_GROUPS = dict.fromkeys(
         {
             "name": "Exporting",
             "options": ["--export-json", "--export-csv", "--export-yaml", "--export-markdown", "--export-svg",
-                        "--export-asciidoc", "--export-plot", "--label-format", "--dark-background", "--bar-color",
+                        "--export-asciidoc", "--export-plot", "--label-format", "--chart-title", "--dark-background", "--bar-color",
                         "--export-html", "--export-image", "--background", "--selenium-browser", "--watermark",
                         "--only-export"]
         }
@@ -123,6 +123,7 @@ INFINITY = float('inf')
 @click.option("--export-asciidoc", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=False, writable=True), help="Export the timing summary statistics as an AsciiDoc table to the given FILE.") # noqa
 @click.option("--export-plot", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=False, writable=True), help="Export the timing summary statistics as a image of a bar plot to the given FILE") # noqa
 @click.option("--label-format", metavar="FORMAT", default="{snippet_name}\n{snippet_code}", show_default="{snippet_name}\\\\n{snippet_code}", help="Format string for the bar plot, only applicable if the ``--export-plot`` option is specified.") # noqa
+@click.option("--chart-title", metavar="TITLE", help="Title for the bar plot, only applicable if the ``--export-plot`` option is specified.") # noqa
 @click.option("--dark-background", is_flag=True, default=False, show_default=True, help="If used, the plot background will be in dark mode instead of light") # noqa
 @click.option("--bar-color", metavar="MATPLOTLIB_COLOR", default="#99bc5a", show_default=True, help="A color to use for the bars in the bar plot. Must be in matplotlib supported format, For more info see https://matplotlib.org/stable/tutorials/colors/colors.html") # noqa
 @click.option("--export-html", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=False, writable=True), help="Export the timing summary statistics as html web page to the given FILE") # noqa
@@ -158,6 +159,7 @@ def app(
     dark_background  : bool,
     bar_color        : str,
     label_format     : str,
+    chart_title      : str,
     export_html      : Path
 ):
     """
@@ -287,7 +289,8 @@ def app(
         if export_plot:
             console.exporter.export_plot(
                 export_plot, unit=time_unit, label_format=label_format,
-                dark_background=dark_background, bar_color=bar_color
+                dark_background=dark_background, bar_color=bar_color,
+                chart_title=chart_title
             )
 
         raise click.exceptions.Exit()
@@ -626,5 +629,6 @@ def app(
     if export_plot:
         console.exporter.export_plot(
             export_plot, unit=time_unit, label_format=label_format,
-            dark_background=dark_background, bar_color=bar_color
+            dark_background=dark_background, bar_color=bar_color,
+            chart_title=chart_title
         )

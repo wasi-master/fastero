@@ -18,7 +18,7 @@
 - [ ] Test compile the code using the `compile()` function before benchmarking. This should be done so that
       any syntax errors can be caught before benchmarking multiple snippets [for a long time] and then it all
       going to waste because of the last snippet having some problem.
-- [ ] Support adding titles to pots generated using matplotlib. This is really easy to implement.
+- [x] Support adding titles to pots generated using matplotlib. This is really easy to implement.
       There should be some parameter, preferably `--chart-title` and then it's value can then be passed
       on to the export_plot function which then, in turn, would use `plt.title(x)` where x is the title.
 - [ ] Allow specifying which lines to benchmark with the `file:` directive. change documentation to reflect this feature

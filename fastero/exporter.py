@@ -649,7 +649,7 @@ class Exporter:
 
             self.alt_console.print("[green] Success:[/] exported as Image")
 
-    def export_plot(self, filename, unit=None, label_format="{snippet_code}", dark_background=False, bar_color="#99bc5a"):
+    def export_plot(self, filename, unit=None, label_format="{snippet_code}", dark_background=False, bar_color="#99bc5a", chart_title=None):
         """
         Export results to a PNG file as a Bar plot.
 
@@ -783,6 +783,11 @@ class Exporter:
                 # Maybe it's alreay an list
                 ax.yaxis.set_ticks(ax.get_yticks())
             ax.set_yticklabels([choose_unit(x, unit=unit, asciimode=False) for x in ax.get_yticks().tolist()])
+            
+            # Set chart title if provided
+            if chart_title:
+                plt.title(chart_title)
+                
             plt.tight_layout()
             # plt.legend()
             # plt.show()
