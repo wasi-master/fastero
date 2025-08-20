@@ -39,7 +39,7 @@ click.rich_click.OPTION_GROUPS = dict.fromkeys(
         {
             "name": "General",
             "options": ["--warmup", "--time-unit", "--snippet-name", "--code-theme", "--from-json",
-                        "--quiet", "--json", "--version", "--help"],
+                        "--quiet", "--json", "--plain", "--version", "--help"],
         },
         {
             "name": "Runs",
@@ -52,7 +52,7 @@ click.rich_click.OPTION_GROUPS = dict.fromkeys(
         {
             "name": "Exporting",
             "options": ["--export-json", "--export-csv", "--export-yaml", "--export-markdown", "--export-svg",
-                        "--export-asciidoc", "--export-plot", "--label-format", "--dark-background", "--bar-color",
+                        "--export-asciidoc", "--export-plot", "--label-format", "--chart-title", "--dark-background", "--bar-color",
                         "--export-html", "--export-image", "--background", "--selenium-browser", "--watermark",
                         "--only-export"]
         }
@@ -101,6 +101,7 @@ INFINITY = float('inf')
 @click.option("--setup", "-s", metavar="STMT", default="pass", show_default=True, help="Code to be executed once in each batch .\nExecution time of this setup code is *not* timed") # noqa
 @click.option("--from-json", "-f", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=True, writable=False), default=None, help="If used, get all the parameters from FILE. The file needs to be a json file with a schema simillar to exported json files") # noqa
 @click.option("--json", "-j", "to_json", is_flag=True, default=False, show_default=False, help="If used, output results in a json format to stdout.") # noqa
+@click.option("--plain", "-p", is_flag=True, default=False, show_default=False, help="If used, output results in a plain format similar to ipython timeit.") # noqa
 @click.option("--quiet", "-q", is_flag=True, default=False, show_default=False, help="If used, there will be no output printed.") # noqa
 @click.option("--only-export", "-e", metavar="FILE", is_flag=True, default=None, show_default=True, help="If used alongside ``--from-json``, skips the benchmarking part and just exports the data.") # noqa
 @click.option("--warmup", "-w", metavar="NUM", type=click.IntRange(min=1), help="Perform NUM warmup runs before the actual benchmark. Perform this only for presistent improvements. Otherwise all performance gains are lost on each batch") # noqa
@@ -123,6 +124,7 @@ INFINITY = float('inf')
 @click.option("--export-asciidoc", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=False, writable=True), help="Export the timing summary statistics as an AsciiDoc table to the given FILE.") # noqa
 @click.option("--export-plot", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=False, writable=True), help="Export the timing summary statistics as a image of a bar plot to the given FILE") # noqa
 @click.option("--label-format", metavar="FORMAT", default="{snippet_name}\n{snippet_code}", show_default="{snippet_name}\\\\n{snippet_code}", help="Format string for the bar plot, only applicable if the ``--export-plot`` option is specified.") # noqa
+@click.option("--chart-title", metavar="TITLE", help="Title for the bar plot, only applicable if the ``--export-plot`` option is specified.") # noqa
 @click.option("--dark-background", is_flag=True, default=False, show_default=True, help="If used, the plot background will be in dark mode instead of light") # noqa
 @click.option("--bar-color", metavar="MATPLOTLIB_COLOR", default="#99bc5a", show_default=True, help="A color to use for the bars in the bar plot. Must be in matplotlib supported format, For more info see https://matplotlib.org/stable/tutorials/colors/colors.html") # noqa
 @click.option("--export-html", metavar="FILE", type=click.Path(dir_okay=False, resolve_path=True, readable=False, writable=True), help="Export the timing summary statistics as html web page to the given FILE") # noqa
@@ -134,6 +136,7 @@ def app(
     setup            : str,
     from_json        : Path,
     to_json          : bool,
+    plain            : bool,
     quiet            : bool,
     only_export      : bool,
     warmup           : int,
@@ -158,6 +161,7 @@ def app(
     dark_background  : bool,
     bar_color        : str,
     label_format     : str,
+    chart_title      : str,
     export_html      : Path
 ):
     """
@@ -219,15 +223,21 @@ def app(
                     end=""
                 )
 
-                console.print(
-                    f"  Time  ([green b]mean[/] ± [green]σ[/]):       "
-                    f"[green b]{formatted_mean.rjust(highest_width)}[/] ± [green]{formatted_stddev.rjust(highest_width)}[/]"
-                )
-                console.print(
-                    f"  Range ([cyan b]min[/]  … [magenta]max[/]):     "
-                    f"[cyan b]{formatted_min.rjust(highest_width)}[/] … [magenta]{formatted_max.rjust(highest_width)}[/]" +
-                    f"    " + f"[bright_black]\[runs: {total_runs:,}][/]"
-                )
+                if plain:
+                    # Plain output format similar to ipython timeit
+                    console.print(
+                        f"{formatted_mean} ± {formatted_stddev} per loop (mean ± std. dev. of {result['runs']} batches, {total_runs:,} loops each)"
+                    )
+                else:
+                    console.print(
+                        f"  Time  ([green b]mean[/] ± [green]σ[/]):       "
+                        f"[green b]{formatted_mean.rjust(highest_width)}[/] ± [green]{formatted_stddev.rjust(highest_width)}[/]"
+                    )
+                    console.print(
+                        f"  Range ([cyan b]min[/]  … [magenta]max[/]):     "
+                        f"[cyan b]{formatted_min.rjust(highest_width)}[/] … [magenta]{formatted_max.rjust(highest_width)}[/]" +
+                        f"    " + f"[bright_black]\[runs: {total_runs:,}][/]"
+                    )
             # Generate a bar plot of all the snippets
             if len(data['results']) > 1:
                 plot = make_bar_plot(
@@ -287,7 +297,8 @@ def app(
         if export_plot:
             console.exporter.export_plot(
                 export_plot, unit=time_unit, label_format=label_format,
-                dark_background=dark_background, bar_color=bar_color
+                dark_background=dark_background, bar_color=bar_color,
+                chart_title=chart_title
             )
 
         raise click.exceptions.Exit()
@@ -336,6 +347,17 @@ def app(
                 setup = f.read()
 
     console.exporter.setup = setup
+
+    # Test compile the setup code to catch syntax errors early
+    if setup and setup != "pass":
+        try:
+            compile(setup, '<setup>', 'exec')
+        except SyntaxError as e:
+            alt_console.print(f"[red b]Syntax Error in setup code:[/] {e}")
+            raise click.exceptions.Exit(1)
+        except Exception as e:
+            alt_console.print(f"[red b]Compilation Error in setup code:[/] {e}")
+            raise click.exceptions.Exit(1)
 
     if setup and setup != "pass" and not _setup_is_gotten_later:
         console.print(
@@ -414,6 +436,16 @@ def app(
 
     _autorange_cache = {}
     for code_snippet, statement_name in zip(code, statement_name):
+        # Test compile the code snippet to catch syntax errors early
+        try:
+            compile(code_snippet, '<benchmark>', 'exec')
+        except SyntaxError as e:
+            alt_console.print(f"[red b]Syntax Error in {statement_name}:[/] {e}")
+            raise click.exceptions.Exit(1)
+        except Exception as e:
+            alt_console.print(f"[red b]Compilation Error in {statement_name}:[/] {e}")
+            raise click.exceptions.Exit(1)
+        
         timer = Timer(stmt=code_snippet, setup=setup)
 
         # Print the snippet name and code with syntax highlighting
@@ -438,9 +470,9 @@ def app(
         ) as progress:
             if warmup:
                 warmup_task = progress.add_task("Warmup runs…", total=warmup)
-                for i in range(warmup):
-                    timer.timeit(number=1)
-                    progress.update(warmup_task, advance=1)
+                # Use the proper warmup method instead of timeit(1)
+                timer.warmup(warmup)
+                progress.update(warmup_task, advance=warmup)
                 progress.remove_task(warmup_task)
 
             def _autorange(timer: Timer, callback=None, max_number=INFINITY):
@@ -550,15 +582,21 @@ def app(
         highest_width = max(len(i) for i in (formatted_mean, formatted_stddev, formatted_min, formatted_max))
 
 
-        console.print(
-            f"  Time  ([green b]mean[/] ± [green]σ[/]):       "
-            f"[green b]{formatted_mean.rjust(highest_width)}[/] ± [green]{formatted_stddev.rjust(highest_width)}[/]"
-        )
-        console.print(
-            f"  Range ([cyan b]min[/]  … [magenta]max[/]):     "
-            f"[cyan b]{formatted_min.rjust(highest_width)}[/] … [magenta]{formatted_max.rjust(highest_width)}[/]" +
-            f"    " + f"[bright_black]\[runs: {total_runs:,}][/]"
-        )
+        if plain:
+            # Plain output format similar to ipython timeit
+            console.print(
+                f"{formatted_mean} ± {formatted_stddev} per loop (mean ± std. dev. of {num_of_batches} batches, {total_runs:,} loops each)"
+            )
+        else:
+            console.print(
+                f"  Time  ([green b]mean[/] ± [green]σ[/]):       "
+                f"[green b]{formatted_mean.rjust(highest_width)}[/] ± [green]{formatted_stddev.rjust(highest_width)}[/]"
+            )
+            console.print(
+                f"  Range ([cyan b]min[/]  … [magenta]max[/]):     "
+                f"[cyan b]{formatted_min.rjust(highest_width)}[/] … [magenta]{formatted_max.rjust(highest_width)}[/]" +
+                f"    " + f"[bright_black]\[runs: {total_runs:,}][/]"
+            )
 
     # If there are multiple code snippets, print a summary
     if len(code) > 1:
@@ -626,5 +664,6 @@ def app(
     if export_plot:
         console.exporter.export_plot(
             export_plot, unit=time_unit, label_format=label_format,
-            dark_background=dark_background, bar_color=bar_color
+            dark_background=dark_background, bar_color=bar_color,
+            chart_title=chart_title
         )

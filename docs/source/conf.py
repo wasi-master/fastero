@@ -32,8 +32,15 @@ release = '0.1.0rc1'
 from pygments import token
 from sphinx.highlighting import lexers
 from csv_lexer import CsvLexer
+from asciidoc_lexer import AsciiDocLexer
+from shell_lexer import ImprovedShellLexer
 
 lexers['csv'] = CsvLexer(startinline=True)
+lexers['asciidoc'] = AsciiDocLexer(startinline=True)
+lexers['adoc'] = AsciiDocLexer(startinline=True)
+lexers['shell'] = ImprovedShellLexer(startinline=True)
+lexers['bash'] = ImprovedShellLexer(startinline=True)
+lexers['improved-shell'] = ImprovedShellLexer(startinline=True)
 
 # -- General configuration ---------------------------------------------------
 

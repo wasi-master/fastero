@@ -43,6 +43,7 @@ Fastero
    development/internal_structure
    development/workflows
    development/license
+   lexer_examples
 
 .. toctree::
    :hidden:
@@ -71,6 +72,7 @@ Indices and Tables
    * `Internal Structure <./development/internal_structure.html>`_
    * `License <./development/license.html>`_
    * `Workflows <./development/workflows.html>`_
+   * `Lexer Examples <./lexer_examples.html>`_
 * `Other <https://www.youtube.com/watch?v=dQw4w9WgXcQ>`_
    * `Glossary <./glossary.html>`_
    * `Index <./genindex.html>`_
