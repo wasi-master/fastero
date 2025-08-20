@@ -470,9 +470,9 @@ def app(
         ) as progress:
             if warmup:
                 warmup_task = progress.add_task("Warmup runs…", total=warmup)
-                for i in range(warmup):
-                    timer.timeit(number=1)
-                    progress.update(warmup_task, advance=1)
+                # Use the proper warmup method instead of timeit(1)
+                timer.warmup(warmup)
+                progress.update(warmup_task, advance=warmup)
                 progress.remove_task(warmup_task)
 
             def _autorange(timer: Timer, callback=None, max_number=INFINITY):

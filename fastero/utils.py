@@ -481,3 +481,77 @@ def inner(_it, _timer):
         it = iter(range(number))
         timing = inner_func(it, self.timer)
         return timing
+    
+    def warmup(self, number=10):
+        """
+        Perform proper warmup runs to prepare the execution environment.
+        
+        This method executes the statement multiple times in the same
+        environment that will be used for the actual benchmark, helping
+        to warm up JIT compilation, caches, and other optimizations.
+        
+        Parameters
+        ----------
+        number : int, optional
+            Number of warmup iterations, by default 10
+        """
+        # Execute the setup once
+        if self.setup_code and self.setup_code != 'pass':
+            namespace = {}
+            namespace.update(self.inner.__globals__)
+            exec(self.setup_code, namespace)
+        
+        # Check if we have global/assignment conflicts like in timeit
+        if self.stmt:
+            globals_vars, assignments = self._extract_globals_and_assignments(self.stmt)
+            conflicting_vars = globals_vars & assignments.keys()
+            
+            if conflicting_vars:
+                # Use the same conflict resolution as in timeit
+                return self._warmup_with_globals(number, conflicting_vars, assignments)
+        
+        # Standard warmup - just execute the statement multiple times
+        namespace = {}
+        namespace.update(self.inner.__globals__)
+        
+        # Execute setup once in the namespace
+        if self.setup_code and self.setup_code != 'pass':
+            exec(self.setup_code, namespace)
+            
+        # Execute the statement multiple times for warmup
+        for _ in range(number):
+            try:
+                exec(self.stmt, namespace)
+            except Exception:
+                # If execution fails, we'll let the main benchmark handle the error
+                break
+    
+    def _warmup_with_globals(self, number, conflicting_vars, assignments):
+        """Warmup with proper global variable handling."""
+        # Same logic as _timeit_with_globals but for warmup
+        modified_stmt = self.stmt
+        
+        # Remove global declarations from the statement for execution
+        for var in conflicting_vars:
+            modified_stmt = modified_stmt.replace(f'global {var}', f'# global {var}')
+        
+        # Create a global namespace with the conflicting variables
+        execution_globals = {}
+        execution_globals.update(self.inner.__globals__)
+        
+        # Add the conflicting variables to globals
+        for var in conflicting_vars:
+            if var in assignments:
+                execution_globals[var] = assignments[var]
+        
+        # Execute setup once
+        if self.setup_code and self.setup_code != 'pass':
+            exec(self.setup_code, execution_globals)
+            
+        # Execute the modified statement multiple times for warmup
+        for _ in range(number):
+            try:
+                exec(modified_stmt, execution_globals)
+            except Exception:
+                # If execution fails, we'll let the main benchmark handle the error
+                break
