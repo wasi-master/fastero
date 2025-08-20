@@ -1,7 +1,7 @@
 # TODO
 
 - [ ] Maybe custom timeit implementation, especially for warmups, since they don't mean anything currently
-- [ ] Add a `--plain` option
+- [x] Add a `--plain` option
   - For this, we can use the ipython syntax
 
     ```text
@@ -15,7 +15,7 @@
   - [ ] Should make `--option` dimmed
   - [ ] Should make the first word some color
   - [ ] Should make strings some color
-- [ ] Test compile the code using the `compile()` function before benchmarking. This should be done so that
+- [x] Test compile the code using the `compile()` function before benchmarking. This should be done so that
       any syntax errors can be caught before benchmarking multiple snippets [for a long time] and then it all
       going to waste because of the last snippet having some problem.
 - [x] Support adding titles to pots generated using matplotlib. This is really easy to implement.
