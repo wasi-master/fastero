@@ -319,10 +319,7 @@ def app(
             setup = gotten_code
             _setup_is_gotten_later = True
     elif setup.startswith("file:"):
-        import re
-
-        setup_regex_match = re.match(r"file: ?((?:[\w,\s-]+\.?\w*)+)", setup)
-        setup_file = setup_regex_match.group(1)
+        setup_file = setup[5:].lstrip()
         if setup_file == "stdin":
             import sys
 
